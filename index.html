@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <title>Clientes</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    body, input {
+      background-color: #2f2f2f;
+      color: #ffffff;
+    }
+  </style>
+
+</head>
+
+<body onload="carregarTabelaCliente()">
+
+<div class="container">
+
+  <h2>Clientes</h2>
+             
+  <table class="table table-dark">
+
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Idade</th>
+        <th>RG</th>
+        <th>Endereço</th>
+      </tr>
+    </thead>
+
+    <tbody id="cliente">
+      
+    </tbody>
+
+  </table>
+
+  <!-- <input type="button" value="Carregar Clientes" onclick="carregarTabelaCliente()"> -->
+
+</div>
+
+</body>
+
+<script>
+  function carregarClientes() {
+    var httpReq = new XMLHttpRequest();
+    var url = "https://demo2254299.mockable.io/cliente";
+    httpReq.open("GET", url, false);
+    httpReq.send(null);
+
+    var resposta = JSON.parse(httpReq.responseText);
+
+    console.log(resposta);
+    return resposta;
+  }
+
+  function carregarTabelaCliente(){
+
+    var clientes = carregarClientes();
+
+    //jQuery - Foreach
+    $("#cliente").html("");
+    $.each(clientes, function(index, item){
+      var linha = "<tr>";
+      linha += "<td>" + item.nome + "</td>";
+      linha += "<td>" + item.idade + "</td>";
+      linha += "<td>" + item.rg + "</td>";
+      linha += "<td>" + item.endereco + "</td>";
+      linha += "</tr>";
+      $("#cliente").append(linha);
+    })
+  }
+</script>
+
+</html>
